@@ -18,7 +18,6 @@ class _MoreState extends State<More> {
       nim = prefs.getString('nim');
     });
   }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -28,11 +27,17 @@ class _MoreState extends State<More> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        home: Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(137, 59, 55, 55),
-        title: const Text('Profile'),
+        backgroundColor: Colors.orange,
+        title: const Text(
+          'PROFIL',
+          style: TextStyle(
+              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 20),
+        ),
       ),
       body: Column(
         children: [
@@ -41,7 +46,10 @@ class _MoreState extends State<More> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(Icons.person, color: Colors.black, size: 35),
+                const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 35),
                 const SizedBox(
                   width: 20,
                 ),
@@ -52,14 +60,14 @@ class _MoreState extends State<More> {
                       nama ?? '',
                       style: const TextStyle(
                         fontSize: 25,
-                        color: Colors.white,
+                        color: Colors.amber,
                       ),
                     ),
                     Text(
                       nim ?? '',
                       style: const TextStyle(
                         fontSize: 16,
-                        color: Colors.white,
+                        color: Colors.amber,
                       ),
                     )
                   ],
@@ -72,40 +80,40 @@ class _MoreState extends State<More> {
               const ListTile(
                 leading: Icon(
                   Icons.person,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
                 title: Text(
                   'Data Pribadi',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.amber),
                 ),
               ),
               const ListTile(
                 leading: Icon(
                   Icons.settings,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
                 title: Text(
                   'Settings',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.amber),
                 ),
                 trailing: Icon(
                   Icons.chevron_right,
-                  color: Colors.black,
+                  color: Colors.white,
                   size: 14,
                 ),
               ),
               ListTile(
                 leading: const Icon(
                   Icons.logout,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
                 title: const Text(
                   'Logout',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.amber),
                 ),
                 trailing: const Icon(
                   Icons.chevron_right,
-                  color: Colors.black,
+                  color: Colors.white,
                   size: 14,
                 ),
                 onTap: () async {
@@ -118,6 +126,6 @@ class _MoreState extends State<More> {
           )
         ],
       ),
-    );
+    ));
   }
 }

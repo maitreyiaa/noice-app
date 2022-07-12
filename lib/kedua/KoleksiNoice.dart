@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noice/kedua/favorite_koleksi.dart';
+import 'package:noice/kedua/playlistStuff/playlist.dart';
 import 'history_koleksi.dart';
 
 class KoleksiNoice extends StatefulWidget {
@@ -16,11 +17,11 @@ class _KoleksiNoiceState extends State<KoleksiNoice> {
       home: Scaffold(
         backgroundColor: const Color(0xFF000000),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF000000),
+          backgroundColor: Colors.orange,
           title: const Text(
             'KOLEKSI',
             style: TextStyle(
-              fontSize: 29,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -28,6 +29,7 @@ class _KoleksiNoiceState extends State<KoleksiNoice> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 10),
             const Text(
               "   Lanjut dengerin",
               style: TextStyle(
@@ -203,44 +205,22 @@ class _KoleksiNoiceState extends State<KoleksiNoice> {
                 ElevatedButton(
                   onPressed: () async {
                     final result = await Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const HistoryKoleksi()),
+                      MaterialPageRoute(builder: (_) => const playlist()),
                     );
                     if (result != null) {
                       setState(() {});
                     }
                   },
-                  child: list("AUDIOBOOK"),
+                  child: list("PLAYLIST"),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
                         const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 15)),
-                    backgroundColor: MaterialStateProperty.all(Colors.white38),
+                    backgroundColor: MaterialStateProperty.all(Colors.white70),
                   ),
                 ),
                 const SizedBox(
                   height: 10,
-                ),
-                Container(
-                  width: 90,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.orange,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      SizedBox(width: 10),
-                      Text(
-                        "+ PLAYLIST",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ],
             )

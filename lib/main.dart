@@ -1,19 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:noice/kedua/history_koleksi.dart';
+import 'package:noice/kedua/playlistStuff/functionList.dart';
 import 'package:noice/launch.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
+const AndroidNotificationChannel settingNotify = AndroidNotificationChannel( // settings
     'high_importance_channel', // id
     'High Importance Notifications', //title
     description: "This channel is used for important notifications.",
     importance: Importance.high,
     playSound: true);
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin functionNotifPlatform = FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -25,9 +26,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation
+  await functionNotifPlatform.resolvePlatformSpecificImplementation
       <AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+      ?.createNotificationChannel(settingNotify);
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -61,15 +62,15 @@ class _MyAppState extends State<MyApp> {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
+        functionNotifPlatform.show(
             notification.hashCode,
             notification.title,
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
+                settingNotify.id,
+                settingNotify.name,
+                channelDescription: settingNotify.description,
                 color: Colors.blue,
                 playSound: true,
                 icon: '@mipmap/ic_launcher',
@@ -78,7 +79,7 @@ class _MyAppState extends State<MyApp> {
       }
       if (message != null) {
         print(message.notification!.title);
-        var _routeName = message.data['route'];
+        final _routeName = message.data['route'];
         Navigator.of(context).pushNamed(_routeName);
       }
     });
@@ -113,11 +114,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const launchPage(),
-      routes: {
-        '/history_koleksi': (_) => const HistoryKoleksi(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CRUD(),
+        )
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: true,
+        home:  const launchPage(),
+        routes: {
+          '/history_koleksi': (_) => const HistoryKoleksi(),
+        },
+      ),
     );
+
   }
 }

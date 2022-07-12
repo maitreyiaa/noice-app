@@ -54,7 +54,6 @@ Widget listCustom(
   );
 }
 
-List favoritPodcast = [];
 List podcastList = [
   {
     'episode': 'EPS 31: SEKOLAH TIDAK PENTING',
